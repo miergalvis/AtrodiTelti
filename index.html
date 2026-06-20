@@ -245,6 +245,366 @@
 <script>
 
 const ENTRIES = [
+  { party: 'Apvienotais saraksts', type: 'tent', date: '2026-10-03', time: '12:00', place: 'Kaut kur Latvijā', note: '' },
+  { party: 'Austošā saule Latvijai', type: 'tent', date: '2026-10-03', time: '12:00', place: 'Kaut kur Latvijā', note: '' },
+  { party: 'Gobzema Saraksts', type: 'tent', date: '2026-10-03', time: '12:00', place: 'Kaut kur Latvijā', note: '' },
+  { party: 'Jaunā konservatīvā partija', type: 'tent', date: '2026-10-03', time: '12:00', place: 'Kaut kur Latvijā', note: '' },
+  { party: 'Jaunā Vienotība', type: 'tent', date: '2026-10-03', time: '12:00', place: 'Kaut kur Latvijā', note: '' },
+  { party: 'Kustība "Par!"', type: 'tent', date: '2026-10-03', time: '12:00', place: 'Kaut kur Latvijā', note: '' },
+  { party: 'Latvija Pirmajā Vietā', type: 'tent', date: '2026-10-03', time: '12:00', place: 'Kaut kur Latvijā', note: '' },
+  { party: 'Latvijas attīstībai', type: 'tent', date: '2026-10-03', time: '12:00', place: 'Kaut kur Latvijā', note: '' },
+  { party: 'Mēs mainām noteikumus', type: 'tent', date: '2026-10-03', time: '12:00', place: 'Kaut kur Latvijā', note: '' },
+  { party: 'Nacionālā apvienība', type: 'tent', date: '2026-10-03', time: '12:00', place: 'Kaut kur Latvijā', note: '' },
+  { party: 'Progresīvie', type: 'tent', date: '2026-10-03', time: '12:00', place: 'Kaut kur Latvijā', note: '' },
+  { party: 'Saskaņas Centrs', type: 'tent', date: '2026-10-03', time: '12:00', place: 'Kaut kur Latvijā', note: '' },
+  { party: 'Suverēnā vara', type: 'tent', date: '2026-10-03', time: '12:00', place: 'Kaut kur Latvijā', note: '' },
+  { party: 'Stabilitātei!', type: 'tent', date: '2026-10-03', time: '12:00', place: 'Kaut kur Latvijā', note: '' },
+  { party: 'Zaļo un Zemnieku savienība', type: 'tent', date: '2026-10-03', time: '12:00', place: 'Kaut kur Latvijā', note: '' },  
+];
+
+const PARTY_LIST = [
+  { name: 'Apvienotais saraksts', color: '#ffa800' },
+  { name: 'Austošā saule Latvijai', color: '#9e1d32' },
+  { name: 'Gobzema Saraksts', color: '#407cd2' },
+  { name: 'Jaunā konservatīvā partija', color: '#002e5d' },
+  { name: 'Jaunā Vienotība', color: '#64c049' },
+  { name: 'Kustība "Par!"', color: '#E3D700' },
+  { name: 'Latvija Pirmajā Vietā', color: '#9e3039' },
+  { name: 'Latvijas attīstībai', color: '#F2D200' },
+  { name: 'Mēs mainām noteikumus', color: '#000000' },
+  { name: 'Nacionālā apvienība', color: '#5a0505' },
+  { name: 'Progresīvie', color: '#e64632' },
+  { name: 'Saskaņas Centrs', color: '#ff2400' },
+  { name: 'Stabilitātei!', color: '#f57d00' },
+  { name: 'Suverēnā vara', color: '#6767ad' },
+  { name: 'Zaļo un Zemnieku savienība', color: '#258b4c' },
+];
+const PARTY_COLOR = Object.fromEntries(PARTY_LIST.map(p=>[p.name, p.color]));
+const PARTY_ORDER = Object.fromEntries(PARTY_LIST.map((p,i)=>[p.name, i]));
+const DEFAULT_PARTY_COLOR = '#9D2235';
+const typeLabels = {tent:'Telts', meeting:'Tikšanās', other:'Cits'};
+
+function populateFilters(){
+  const partySel = document.getElementById('filterParty');
+  const curParty = partySel.value;
+  partySel.innerHTML = '<option value="">Visas</option>' + PARTY_LIST.map(p=>`<option value="${escAttr(p.name)}">${esc(p.name)}</option>`).join('');
+  partySel.value = curParty;
+}
+
+function formatDateLabel(dstr){
+  const d = new Date(dstr+'T00:00:00');
+  if(isNaN(d)) return dstr;
+  return d.toLocaleDateString('lv-LV', {weekday:'short', day:'numeric', month:'short'});
+}
+
+function esc(s){ return (s||'').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function escAttr(s){ return esc(s); }
+
+function render(){
+  populateFilters();
+
+  const partyF = document.getElementById('filterParty').value;
+
+  let filtered = ENTRIES.filter(e=>{
+    if(partyF && e.party !== partyF) return false;
+    return true;
+  });
+
+  filtered.sort((a,b)=>{
+    const ka = (a.date||'9999') + (a.time||'99:99');
+    const kb = (b.date||'9999') + (b.time||'99:99');
+    if(ka !== kb) return ka.localeCompare(kb);
+    const oa = PARTY_ORDER[a.party] ?? 999;
+    const ob = PARTY_ORDER[b.party] ?? 999;
+    return oa - ob;
+  });
+
+  const countLine = document.getElementById('countLine');
+  countLine.textContent = filtered.length === ENTRIES.length
+    ? `${ENTRIES.length} ierakst${ENTRIES.length===1?'s':(ENTRIES.length%10===1&&ENTRIES.length>10?'s':'i')}`
+    : `${filtered.length} no ${ENTRIES.length} ierakstiem`;
+
+  const container = document.getElementById('entries');
+  if(filtered.length === 0){
+    container.innerHTML = `<div class="empty"><span class="big"></span>Nekas nav atrasts.</div>`;
+    return;
+  }
+
+  let html = '';
+  let lastDate = null;
+  for(const e of filtered){
+    if(e.date !== lastDate){
+      html += `<div class="day-divider">${formatDateLabel(e.date)}</div>`;
+      lastDate = e.date;
+    }
+    const timeDisplay = e.time ? e.time : '—';
+    html += `
+      <div class="card type-${e.type}">
+        <div class="card-time">${timeDisplay}<small>${e.time?'':'laiks nezināms'}</small></div>
+        <div class="card-main">
+          <p class="party" style="color:${PARTY_COLOR[e.party]||DEFAULT_PARTY_COLOR}">${esc(e.party)}</p>
+          <span class="type-tag">${typeLabels[e.type]||'Cits'}</span>
+          <p class="place">${esc(e.place)}</p>
+          ${e.note ? `<p class="note">${esc(e.note)}</p>` : ''}
+        </div>
+      </div>`;
+  }
+  container.innerHTML = html;
+}
+
+document.getElementById('filterParty').addEventListener('change', render);
+
+render();
+</script>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="lv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Partiju teltis vienuviet</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+  :root{
+    --cream:#F1F0ED;
+    --ink:#5d5d5d;
+    --carmine:#1a1a1a;
+    --carmine-dark:#5d5d5d;
+    --line:#5d5d5d;
+    --paper:#FFFFFF;
+  }
+  *{box-sizing:border-box; font-family:'Poppins', sans-serif;}
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Poppins', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  header{
+    background:var(--carmine);
+    color:#FFFFFF;
+    padding:36px 24px 28px;
+    position:relative;
+    text-align:center;
+    overflow:hidden;
+  }
+  .header-inner{max-width:980px;margin:0 auto;position:relative;}
+  .eyebrow{
+    font-family:'Poppins', sans-serif;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    font-size:11px;
+    opacity:.8;
+    margin:0 0 8px;
+  }
+  h1{
+    margin:0;
+    font-size:clamp(28px,5vw,46px);
+    font-weight:700;
+    letter-spacing:-0.01em;
+    line-height:1.05;
+    color:#FFFFFF;
+  }
+  .sub{
+    margin:10px auto 0;
+    font-size:15px;
+    max-width:560px;
+    opacity:.92;
+    line-height:1.5;
+  }
+
+  main{max-width:980px;margin:0 auto;padding:28px 24px 80px;}
+
+  .toolbar{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+    align-items:flex-end;
+    justify-content:space-between;
+    margin-bottom:20px;
+    padding-bottom:16px;
+    border-bottom:1px solid var(--line);
+  }
+  .filters{display:flex; gap:10px; flex-wrap:wrap; flex:1;}
+  .filter-group{display:flex; flex-direction:column; gap:4px;}
+  .filter-group label{
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:.1em;
+    color:#5d5d5d;
+    font-family:'Poppins', sans-serif;
+  }
+  select, input[type=text]{
+    font-family:'Poppins', sans-serif;
+    font-size:14px;
+    padding:8px 10px;
+    border:1px solid var(--line);
+    border-radius:15px;
+    background:var(--paper);
+    color:var(--ink);
+    min-width:150px;
+  }
+  select:focus, input:focus{outline:2px solid var(--carmine); outline-offset:1px;}
+
+  button{
+    font-family:'Poppins', sans-serif;
+    cursor:pointer;
+    border:none;
+    border-radius:10px;
+  }
+  .btn-primary{
+    background:var(--carmine);
+    color:var(--cream);
+    padding:10px 18px;
+    font-size:14px;
+    font-weight:600;
+    white-space:nowrap;
+    transition:background .15s;
+  }
+  .btn-primary:hover{background:var(--carmine-dark);}
+  .btn-ghost{
+    background:none;
+    color:var(--carmine);
+    text-decoration:underline;
+    font-size:13px;
+    padding:4px;
+  }
+
+  .count-line{
+    font-family:'Poppins', sans-serif;
+    font-size:12px;
+    color:#5d5d5d;
+    margin-bottom:18px;
+    letter-spacing:.02em;
+  }
+
+  .entries{display:flex; flex-direction:column; gap:0;}
+
+  .day-divider{
+    font-family:'Poppins', sans-serif;
+    font-size:22px;
+    font-weight:700;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+    color:var(--carmine);
+    margin:28px 0 10px;
+    padding-bottom:6px;
+    border-bottom:1px dashed var(--line);
+  }
+  .day-divider:first-child{margin-top:0;}
+
+  .card{
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:15px;
+    padding:16px 18px;
+    margin-bottom:10px;
+    display:grid;
+    grid-template-columns:84px 1fr;
+    gap:16px;
+    align-items:start;
+  }
+
+  .card-time{
+    font-family:'Poppins', sans-serif;
+    font-size:18px;
+    font-weight:700;
+    color:var(--ink);
+    line-height:1.1;
+    padding-top:2px;
+  }
+  .card-time small{display:block; font-size:10px; font-weight:400; color:#7d7264; margin-top:3px; letter-spacing:.05em;}
+
+  .card-main .party{
+    font-size:18px;
+    font-weight:700;
+    margin:0 0 2px;
+  }
+  .card-main .type-tag{
+    display:inline-block;
+    font-family:'Poppins', sans-serif;
+    font-size:10px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--ink);
+    border:none;
+    border-radius:0;
+    padding:0;
+    margin:4px 0 8px;
+  }
+  .type-meeting .type-tag{color:var(--ink); border-color:var(--ink);}
+  .type-other .type-tag{color:var(--ink); border-color:var(--ink);}
+
+  .card-main .place{font-size:14px; margin:0 0 4px;}
+  .card-main .note{font-size:13px; color:#5b5347; margin:6px 0 0; line-height:1.45;}
+
+  .empty{
+    text-align:center;
+    padding:60px 20px;
+    color:#5d5d5d;
+  }
+  .empty .big{font-size:32px; display:block; margin-bottom:8px;}
+
+
+
+  .site-footer{
+    max-width:980px;
+    margin:0 auto;
+    padding:24px 24px 36px;
+    border-top:1px solid var(--line);
+    color:#5d5d5d;
+    font-size:13px;
+    line-height:1.5;
+    text-align:center;
+  }
+  .site-footer a{
+    color:var(--ink);
+    font-weight:700;
+    text-decoration:underline;
+  }
+
+  @media (max-width:540px){
+    .card{grid-template-columns:1fr; gap:8px;}
+    .card-time{flex-direction:row; gap:8px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <h1>Partiju teltis vienuviet</h1>
+    <p class="sub">Atrodi, kur un cikos 15. Saeimas vēlēšanās kandidējošās partijas būs sastopamas klātienē, un izmanto iespēju satikt kandidātus pirms vēlēšanām.</p>
+  </div>
+</header>
+
+<main>
+
+  <div class="toolbar">
+    <div class="filters">
+      <div class="filter-group">
+        <label for="filterParty">Partija</label>
+        <select id="filterParty"><option value="">Visas</option></select>
+      </div>
+    </div>
+  </div>
+
+  <p class="count-line" id="countLine">Ielādē!!!</p>
+
+  <div class="entries" id="entries"></div>
+
+</main>
+
+<footer class="site-footer">
+  Par labojumiem, teltīm un citu, sazinaties ar Visvaldi:
+  <a href="mailto:visvaldis.berzins@klubsmaja.lv">visvaldis.berzins@klubsmaja.lv</a>
+</footer>
+
+<script>
+
+const ENTRIES = [
   { party: 'Latvija Pirmajā Vietā', type: 'tent', date: '2026-06-21', time: '14:30', place: 'Doma laukums, Rīga', note: '' },
   { party: 'Jaunā Vienotība', type: 'tent', date: '2026-06-21', time: '15:30', place: 'Doma laukums, Rīga', note: '' },
   { party: 'Zaļo un Zemnieku savienība', type: 'tent', date: '2026-07-21', time: '15:30', place: 'Doma laukums, Rīga', note: '' },
