@@ -185,6 +185,30 @@
   }
   .empty .big{font-size:32px; display:block; margin-bottom:8px;}
 
+  .music-toggle{
+  margin-top:18px;
+  display:inline-flex;
+  align-items:center;
+  background:rgba(255,255,255,.14);
+  padding:8px 12px;
+  border-radius:4px;
+}
+
+.music-toggle label{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:13px;
+  cursor:pointer;
+  user-select:none;
+}
+
+.music-toggle input{
+  width:15px;
+  height:15px;
+  cursor:pointer;
+  accent-color:#FFFFFF;
+}
   @media (max-width:540px){
     .card{grid-template-columns:1fr; gap:8px;}
     .card-time{flex-direction:row; gap:8px;}
@@ -197,8 +221,22 @@
   <div class="header-inner">
     <h1>Atrodi telti</h1>
     <p class="sub">Parunā ar senioriem!</p>
+    <div class="music-toggle">
+  <label>
+    <input type="checkbox" id="musicToggle">
+    <span>MILŽU CĪŅA!!!</span>
+  </label>
+</div>
+
+<audio id="bgMusic" loop preload="auto">
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
   </div>
 </header>
+
+<audio id="bgMusic" loop preload="auto">
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
 
 <main>
 
@@ -224,6 +262,9 @@ const ENTRIES = [
   { party: 'Latvija Pirmajā Vietā', type: 'tent', date: '2026-06-21', time: '14:30', place: 'Doma laukums, Rīga', note: '' },
   { party: 'Jaunā Vienotība', type: 'tent', date: '2026-06-21', time: '15:30', place: 'Doma laukums, Rīga', note: '' },
   { party: 'Zaļo un Zemnieku savienība', type: 'tent', date: '2026-07-21', time: '15:30', place: 'Doma laukums, Rīga', note: '' },
+  { party: 'Jaunā Vienotība', type: 'tent', date: '2026-06-21', time: '15:30', place: 'Doma laukums, Rīga', note: '' },
+  { party: 'Austošā saule Latvijai', type: 'tent', date: '2026-06-21', time: '16:30', place: 'Doma laukums, Rīga', note: '' },
+
 ];
 
 const PARTY_LIST = [
@@ -314,7 +355,29 @@ function render(){
 
 document.getElementById('filterParty').addEventListener('change', render);
 
+
 render();
+
+const musicToggle = document.getElementById('musicToggle');
+const bgMusic = document.getElementById('bgMusic');
+
+if (musicToggle && bgMusic) {
+  bgMusic.volume = 0.35;
+
+  musicToggle.addEventListener('change', async () => {
+    if (musicToggle.checked) {
+      try {
+        await bgMusic.play();
+      } catch (error) {
+        musicToggle.checked = false;
+        alert('Pārlūks neļāva automātiski palaist mūziku. Pamēģini vēlreiz.');
+      }
+    } else {
+      bgMusic.pause();
+    }
+  });
+}
+
 </script>
 
 </body>
