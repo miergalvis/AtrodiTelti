@@ -4,17 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Partiju Karte — kur un kad</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --cream:#FAF6EF;
-    --ink:#231F1A;
-    --carmine:#9D2235;
-    --carmine-dark:#7A1A29;
-    --gold:#C9A24B;
-    --line:#E3DACB;
+    --cream:#F1F0ED;
+    --ink:#5d5d5d;
+    --carmine:#000000;
+    --carmine-dark:#5d5d5d;
+    --line:#000000;
     --paper:#FFFFFF;
   }
   *{box-sizing:border-box;}
@@ -22,29 +18,19 @@
     margin:0;
     background:var(--cream);
     color:var(--ink);
-    font-family:'Poppins','Helvetica Neue',Arial,sans-serif;
+    font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
     -webkit-font-smoothing:antialiased;
   }
   header{
     background:var(--carmine);
-    color:var(--cream);
+    color:#FFFFFF;
     padding:36px 24px 28px;
     position:relative;
     overflow:hidden;
-    border-bottom:6px solid var(--gold);
-  }
-  header::before{
-    content:"";
-    position:absolute;
-    top:0; left:0; right:0; bottom:0;
-    background-image: repeating-linear-gradient(
-      135deg, rgba(255,255,255,0.05) 0 2px, transparent 2px 22px
-    );
-    pointer-events:none;
   }
   .header-inner{max-width:980px;margin:0 auto;position:relative;}
   .eyebrow{
-    font-family:'Courier New',monospace;
+    font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
     letter-spacing:.18em;
     text-transform:uppercase;
     font-size:11px;
@@ -57,8 +43,8 @@
     font-weight:700;
     letter-spacing:-0.01em;
     line-height:1.05;
+    color:#FFFFFF;
   }
-  h1 em{font-style:italic;color:var(--gold);}
   .sub{
     margin:10px 0 0;
     font-size:15px;
@@ -86,7 +72,7 @@
     text-transform:uppercase;
     letter-spacing:.1em;
     color:#7d7264;
-    font-family:'Courier New',monospace;
+    font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
   }
   select, input[type=text]{
     font-family:inherit;
@@ -123,21 +109,9 @@
     font-size:13px;
     padding:4px;
   }
-  .toolbar-buttons{display:flex; gap:10px; flex-wrap:wrap;}
-  .btn-secondary{
-    background:var(--paper);
-    color:var(--carmine);
-    border:1px solid var(--carmine);
-    padding:10px 16px;
-    font-size:14px;
-    font-weight:500;
-    white-space:nowrap;
-    transition:background .15s;
-  }
-  .btn-secondary:hover{background:#FDF1EC;}
 
   .count-line{
-    font-family:'Courier New',monospace;
+    font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
     font-size:12px;
     color:#7d7264;
     margin-bottom:18px;
@@ -147,37 +121,35 @@
   .entries{display:flex; flex-direction:column; gap:0;}
 
   .day-divider{
-    font-family:'Courier New',monospace;
-    font-size:11px;
-    letter-spacing:.15em;
+    font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+    font-size:22px;
+    font-weight:700;
+    letter-spacing:.04em;
     text-transform:uppercase;
     color:var(--carmine);
     margin:28px 0 10px;
     padding-bottom:6px;
-    border-bottom:1px dashed var(--gold);
+    border-bottom:1px dashed var(--line);
   }
   .day-divider:first-child{margin-top:0;}
 
   .card{
     background:var(--paper);
     border:1px solid var(--line);
-    border-left:4px solid var(--carmine);
     border-radius:4px;
     padding:16px 18px;
     margin-bottom:10px;
     display:grid;
-    grid-template-columns:84px 1fr auto;
+    grid-template-columns:84px 1fr;
     gap:16px;
     align-items:start;
   }
-  .card.type-meeting{border-left-color:var(--gold);}
-  .card.type-other{border-left-color:#7d7264;}
 
   .card-time{
-    font-family:'Courier New',monospace;
+    font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
     font-size:18px;
     font-weight:700;
-    color:var(--carmine);
+    color:var(--ink);
     line-height:1.1;
     padding-top:2px;
   }
@@ -190,26 +162,21 @@
   }
   .card-main .type-tag{
     display:inline-block;
-    font-family:'Courier New',monospace;
+    font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
     font-size:10px;
     letter-spacing:.1em;
     text-transform:uppercase;
-    color:var(--carmine);
-    border:1px solid var(--carmine);
-    border-radius:10px;
-    padding:2px 8px;
+    color:var(--ink);
+    border:none;
+    border-radius:0;
+    padding:0;
     margin:4px 0 8px;
   }
-  .type-meeting .type-tag{color:#9c7a1f; border-color:var(--gold);}
-  .type-other .type-tag{color:#7d7264; border-color:#7d7264;}
+  .type-meeting .type-tag{color:var(--ink); border-color:var(--ink);}
+  .type-other .type-tag{color:var(--ink); border-color:var(--ink);}
 
   .card-main .place{font-size:14px; margin:0 0 4px;}
-  .card-main .place::before{content:"📍 ";}
   .card-main .note{font-size:13px; color:#5b5347; margin:6px 0 0; line-height:1.45;}
-
-  .card-actions{display:flex; flex-direction:column; gap:6px; align-items:flex-end;}
-  .card-actions button{font-size:12px; padding:4px 8px; color:#7d7264; background:none;}
-  .card-actions button:hover{color:var(--carmine);}
 
   .empty{
     text-align:center;
@@ -218,54 +185,9 @@
   }
   .empty .big{font-size:32px; display:block; margin-bottom:8px;}
 
-  /* Modal */
-  .modal-overlay{
-    position:fixed; inset:0; background:rgba(35,31,26,.55);
-    display:none; align-items:center; justify-content:center;
-    padding:20px; z-index:50;
-  }
-  .modal-overlay.open{display:flex;}
-  .modal{
-    background:var(--paper);
-    border-radius:6px;
-    max-width:440px;
-    width:100%;
-    padding:28px;
-    border-top:5px solid var(--carmine);
-    max-height:90vh;
-    overflow-y:auto;
-  }
-  .modal h2{margin:0 0 18px; font-size:20px;}
-  .modal-hint{font-size:13px; color:#7d7264; margin:-10px 0 18px; line-height:1.5;}
-  .field{margin-bottom:14px; display:flex; flex-direction:column; gap:5px;}
-  .field label{font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:#7d7264; font-family:'Courier New',monospace;}
-  .field input, .field select, .field textarea{
-    width:100%; font-family:inherit; font-size:14px; padding:9px 10px;
-    border:1px solid var(--line); border-radius:3px; background:var(--cream);
-  }
-  .field textarea{resize:vertical; min-height:60px;}
-  .modal-actions{display:flex; justify-content:flex-end; gap:10px; margin-top:18px;}
-  .btn-cancel{background:none; color:#7d7264; padding:10px 14px; font-size:14px;}
-
-  .fab{
-    position:fixed; bottom:26px; right:26px;
-    width:56px; height:56px; border-radius:50%;
-    background:var(--carmine); color:var(--cream);
-    font-size:28px; line-height:1; display:flex; align-items:center; justify-content:center;
-    box-shadow:0 4px 14px rgba(0,0,0,.25);
-    z-index:30;
-  }
-  .fab:hover{background:var(--carmine-dark);}
-
-  footer{
-    text-align:center; padding:24px; font-size:11px; color:#a89d8c;
-    font-family:'Courier New',monospace;
-  }
-
   @media (max-width:540px){
     .card{grid-template-columns:1fr; gap:8px;}
     .card-time{flex-direction:row; gap:8px;}
-    .card-actions{flex-direction:row; align-items:center;}
   }
 </style>
 </head>
@@ -273,9 +195,8 @@
 
 <header>
   <div class="header-inner">
-    <p class="eyebrow">15. Saeimas vēlēšanas · 2026</p>
     <h1>Atrodi telti</h1>
-    <p class="sub">Partiju telšu, tikšanās vietu un pasākumu uzskaite.</p>
+    <p class="sub">Parunā ar senioriem!</p>
   </div>
 </header>
 
@@ -287,187 +208,47 @@
         <label for="filterParty">Partija</label>
         <select id="filterParty"><option value="">Visas</option></select>
       </div>
-      <div class="filter-group">
-        <label for="filterType">Veids</label>
-        <select id="filterType">
-          <option value="">Visi</option>
-          <option value="tent">Telts</option>
-          <option value="meeting">Tikšanās</option>
-          <option value="other">Cits</option>
-        </select>
-      </div>
-      <div class="filter-group">
-        <label for="filterDate">Datums</label>
-        <select id="filterDate"><option value="">Visi</option></select>
-      </div>
-      <div class="filter-group">
-        <label for="searchBox">Meklēt vietu</label>
-        <input type="text" id="searchBox" placeholder="piem. Doma laukums">
-      </div>
-    </div>
-    <div class="toolbar-buttons">
-      <button class="btn-secondary" id="openSuggest">Ierosināt informāciju</button>
-      <button class="btn-primary" id="openAdd">+ Pievienot ierakstu</button>
     </div>
   </div>
 
-  <p class="count-line" id="countLine">Ielādē...</p>
+  <p class="count-line" id="countLine">Ielādē!!!</p>
 
   <div class="entries" id="entries"></div>
 
 </main>
 
-<button class="fab" id="fabAdd" title="Pievienot ierakstu" aria-label="Pievienot ierakstu">+</button>
-
-<div class="modal-overlay" id="modalOverlay">
-  <div class="modal">
-    <h2 id="modalTitle">Pievienot ierakstu</h2>
-    <form id="entryForm">
-      <input type="hidden" id="entryId">
-      <div class="field">
-        <label for="fParty">Partija</label>
-        <input type="text" id="fParty" required placeholder="piem. Jaunā Vienotība">
-      </div>
-      <div class="field">
-        <label for="fType">Veids</label>
-        <select id="fType">
-          <option value="tent">Telts</option>
-          <option value="meeting">Tikšanās</option>
-          <option value="other">Cits</option>
-        </select>
-      </div>
-      <div class="field">
-        <label for="fDate">Datums</label>
-        <input type="date" id="fDate" required>
-      </div>
-      <div class="field">
-        <label for="fTime">Laiks</label>
-        <input type="time" id="fTime">
-      </div>
-      <div class="field">
-        <label for="fPlace">Vieta</label>
-        <input type="text" id="fPlace" required placeholder="piem. Doma laukums, Rīga">
-      </div>
-      <div class="field">
-        <label for="fNote">Piezīme (nav obligāti)</label>
-        <textarea id="fNote" placeholder="papildu info, kontakts, u.c."></textarea>
-      </div>
-      <div class="modal-actions">
-        <button type="button" class="btn-cancel" id="cancelModal">Atcelt</button>
-        <button type="submit" class="btn-primary" id="saveBtn">Saglabāt</button>
-      </div>
-    </form>
-  </div>
-</div>
-
-<div class="modal-overlay" id="suggestOverlay">
-  <div class="modal">
-    <h2>Ierosināt informāciju</h2>
-    <p class="modal-hint">Zini par telti, tikšanos vai pasākumu? Aizpildi un tas atvērsies kā e-pasts man — es to pievienošu, kad pārbaudīšu.</p>
-    <form id="suggestForm">
-      <div class="field">
-        <label for="sParty">Partija</label>
-        <input type="text" id="sParty" required placeholder="piem. Jaunā Vienotība">
-      </div>
-      <div class="field">
-        <label for="sType">Veids</label>
-        <select id="sType">
-          <option value="Telts">Telts</option>
-          <option value="Tikšanās">Tikšanās</option>
-          <option value="Cits">Cits</option>
-        </select>
-      </div>
-      <div class="field">
-        <label for="sDate">Datums</label>
-        <input type="date" id="sDate">
-      </div>
-      <div class="field">
-        <label for="sTime">Laiks</label>
-        <input type="time" id="sTime">
-      </div>
-      <div class="field">
-        <label for="sPlace">Vieta</label>
-        <input type="text" id="sPlace" required placeholder="piem. Doma laukums, Rīga">
-      </div>
-      <div class="field">
-        <label for="sNote">Piezīme / no kurienes zini (nav obligāti)</label>
-        <textarea id="sNote" placeholder="papildu info, avots, kontakts..."></textarea>
-      </div>
-      <div class="field">
-        <label for="sFrom">Tavs e-pasts (nav obligāti, ja vēlies atbildi)</label>
-        <input type="email" id="sFrom" placeholder="tavs@epasts.lv">
-      </div>
-      <div class="modal-actions">
-        <button type="button" class="btn-cancel" id="cancelSuggest">Atcelt</button>
-        <button type="submit" class="btn-primary">Sūtīt ierosinājumu</button>
-      </div>
-    </form>
-  </div>
-</div>
-
-<div class="modal-overlay" id="pwOverlay">
-  <div class="modal" style="max-width:340px;">
-    <h2>Pārbaude</h2>
-    <p class="modal-hint">Tikai tu vari pievienot ierakstus tieši. Ievadi paroli.</p>
-    <form id="pwForm">
-      <div class="field">
-        <label for="pwInput">Parole</label>
-        <input type="password" id="pwInput" autocomplete="off">
-      </div>
-      <div class="modal-actions">
-        <button type="button" class="btn-cancel" id="cancelPw">Atcelt</button>
-        <button type="submit" class="btn-primary">Apstiprināt</button>
-      </div>
-    </form>
-  </div>
-</div>
-
-<footer>veidots, lai zinātu, kur iet · dati tiek koplietoti starp visiem skatītājiem</footer>
 
 <script>
-const STORE_KEY = 'lv-party-entries';
-const OWNER_EMAIL = 'visvaldis1924@gmail.com';
-const ADMIN_PASSWORD = 'ATSLEGA123';
-let entries = [];
-let isAdmin = false;
 
+const ENTRIES = [
+  { party: 'Latvija Pirmajā Vietā', type: 'tent', date: '2026-06-21', time: '14:30', place: 'Doma laukums, Rīga', note: '' },
+  { party: 'Jaunā Vienotība', type: 'tent', date: '2026-06-21', time: '15:30', place: 'Doma laukums, Rīga', note: '' },
+  { party: 'Zaļo un Zemnieku savienība', type: 'tent', date: '2026-07-21', time: '15:30', place: 'Doma laukums, Rīga', note: '' },
+];
+
+const PARTY_LIST = [
+  { name: 'Latvija Pirmajā Vietā', color: '#7A1F2B' },
+  { name: 'Jaunā Vienotība', color: '#64c049' },
+  { name: 'Nacionālā apvienība', color: '#2F4A22' },
+  { name: 'Apvienotais saraksts', color: '#4C8C2B' },
+  { name: 'Zaļo un Zemnieku savienība', color: '#1B5E20' },
+  { name: 'Jaunā konservatīvā partija', color: '#14807A' },
+  { name: 'Progresīvie', color: '#E6007E' },
+  { name: 'Stabilitātei!', color: '#C0392B' },
+  { name: 'Latvijas attīstībai', color: '#E07B00' },
+  { name: 'Mēs mainām noteikumus', color: '#6A3FA0' },
+  { name: 'Austošā saule Latvijai', color: '#D4A800' },
+];
+const PARTY_COLOR = Object.fromEntries(PARTY_LIST.map(p=>[p.name, p.color]));
+const PARTY_ORDER = Object.fromEntries(PARTY_LIST.map((p,i)=>[p.name, i]));
+const DEFAULT_PARTY_COLOR = '#9D2235';
 const typeLabels = {tent:'Telts', meeting:'Tikšanās', other:'Cits'};
-
-async function loadEntries(){
-  try{
-    const res = await window.storage.get(STORE_KEY, true);
-    entries = res ? JSON.parse(res.value) : [];
-  }catch(e){
-    entries = [];
-  }
-  render();
-}
-
-async function saveEntries(){
-  try{
-    await window.storage.set(STORE_KEY, JSON.stringify(entries), true);
-  }catch(e){
-    console.error('Storage error', e);
-    alert('Neizdevās saglabāt. Pamēģini vēlreiz.');
-  }
-}
-
-function uid(){ return 'e' + Date.now() + Math.random().toString(36).slice(2,7); }
 
 function populateFilters(){
   const partySel = document.getElementById('filterParty');
-  const dateSel = document.getElementById('filterDate');
   const curParty = partySel.value;
-  const curDate = dateSel.value;
-
-  const parties = [...new Set(entries.map(e=>e.party))].sort((a,b)=>a.localeCompare(b,'lv'));
-  const dates = [...new Set(entries.map(e=>e.date))].sort();
-
-  partySel.innerHTML = '<option value="">Visas</option>' + parties.map(p=>`<option value="${escAttr(p)}">${esc(p)}</option>`).join('');
-  dateSel.innerHTML = '<option value="">Visi</option>' + dates.map(d=>`<option value="${d}">${formatDateLabel(d)}</option>`).join('');
-
+  partySel.innerHTML = '<option value="">Visas</option>' + PARTY_LIST.map(p=>`<option value="${escAttr(p.name)}">${esc(p.name)}</option>`).join('');
   partySel.value = curParty;
-  dateSel.value = curDate;
 }
 
 function formatDateLabel(dstr){
@@ -483,32 +264,29 @@ function render(){
   populateFilters();
 
   const partyF = document.getElementById('filterParty').value;
-  const typeF = document.getElementById('filterType').value;
-  const dateF = document.getElementById('filterDate').value;
-  const searchF = document.getElementById('searchBox').value.trim().toLowerCase();
 
-  let filtered = entries.filter(e=>{
+  let filtered = ENTRIES.filter(e=>{
     if(partyF && e.party !== partyF) return false;
-    if(typeF && e.type !== typeF) return false;
-    if(dateF && e.date !== dateF) return false;
-    if(searchF && !(e.place||'').toLowerCase().includes(searchF)) return false;
     return true;
   });
 
   filtered.sort((a,b)=>{
     const ka = (a.date||'9999') + (a.time||'99:99');
     const kb = (b.date||'9999') + (b.time||'99:99');
-    return ka.localeCompare(kb);
+    if(ka !== kb) return ka.localeCompare(kb);
+    const oa = PARTY_ORDER[a.party] ?? 999;
+    const ob = PARTY_ORDER[b.party] ?? 999;
+    return oa - ob;
   });
 
   const countLine = document.getElementById('countLine');
-  countLine.textContent = filtered.length === entries.length
-    ? `${entries.length} ierakst${entries.length===1?'s':(entries.length%10===1&&entries.length>10?'s':'i')}`
-    : `${filtered.length} no ${entries.length} ierakstiem`;
+  countLine.textContent = filtered.length === ENTRIES.length
+    ? `${ENTRIES.length} ierakst${ENTRIES.length===1?'s':(ENTRIES.length%10===1&&ENTRIES.length>10?'s':'i')}`
+    : `${filtered.length} no ${ENTRIES.length} ierakstiem`;
 
   const container = document.getElementById('entries');
   if(filtered.length === 0){
-    container.innerHTML = `<div class="empty"><span class="big">⛺</span>Nekas nav atrasts. Mainī filtru vai pievieno jaunu ierakstu.</div>`;
+    container.innerHTML = `<div class="empty"><span class="big"></span>Nekas nav atrasts.</div>`;
     return;
   }
 
@@ -521,166 +299,22 @@ function render(){
     }
     const timeDisplay = e.time ? e.time : '—';
     html += `
-      <div class="card type-${e.type}" data-id="${e.id}">
+      <div class="card type-${e.type}">
         <div class="card-time">${timeDisplay}<small>${e.time?'':'laiks nezināms'}</small></div>
         <div class="card-main">
-          <p class="party">${esc(e.party)}</p>
+          <p class="party" style="color:${PARTY_COLOR[e.party]||DEFAULT_PARTY_COLOR}">${esc(e.party)}</p>
           <span class="type-tag">${typeLabels[e.type]||'Cits'}</span>
           <p class="place">${esc(e.place)}</p>
           ${e.note ? `<p class="note">${esc(e.note)}</p>` : ''}
-        </div>
-        <div class="card-actions">
-          ${isAdmin ? `<button data-action="edit" data-id="${e.id}">Labot</button>
-          <button data-action="delete" data-id="${e.id}">Dzēst</button>` : ''}
         </div>
       </div>`;
   }
   container.innerHTML = html;
 }
 
-// Filter listeners
-['filterParty','filterType','filterDate','searchBox'].forEach(id=>{
-  document.getElementById(id).addEventListener('input', render);
-  document.getElementById(id).addEventListener('change', render);
-});
+document.getElementById('filterParty').addEventListener('change', render);
 
-// Modal logic
-const overlay = document.getElementById('modalOverlay');
-const form = document.getElementById('entryForm');
-
-function openModal(entry){
-  document.getElementById('modalTitle').textContent = entry ? 'Labot ierakstu' : 'Pievienot ierakstu';
-  document.getElementById('entryId').value = entry ? entry.id : '';
-  document.getElementById('fParty').value = entry ? entry.party : '';
-  document.getElementById('fType').value = entry ? entry.type : 'tent';
-  document.getElementById('fDate').value = entry ? entry.date : '';
-  document.getElementById('fTime').value = entry ? (entry.time||'') : '';
-  document.getElementById('fPlace').value = entry ? entry.place : '';
-  document.getElementById('fNote').value = entry ? (entry.note||'') : '';
-  overlay.classList.add('open');
-  document.getElementById('fParty').focus();
-}
-function closeModal(){ overlay.classList.remove('open'); }
-
-document.getElementById('openAdd').addEventListener('click', ()=>requestAdminThen(()=>openModal(null)));
-document.getElementById('fabAdd').addEventListener('click', ()=>requestAdminThen(()=>openModal(null)));
-document.getElementById('cancelModal').addEventListener('click', closeModal);
-overlay.addEventListener('click', (e)=>{ if(e.target===overlay) closeModal(); });
-
-// --- Admin password gate ---
-const pwOverlay = document.getElementById('pwOverlay');
-const pwForm = document.getElementById('pwForm');
-let pendingAction = null;
-
-function requestAdminThen(action){
-  if(isAdmin){ action(); return; }
-  pendingAction = action;
-  pwOverlay.classList.add('open');
-  document.getElementById('pwInput').value = '';
-  document.getElementById('pwInput').focus();
-}
-document.getElementById('cancelPw').addEventListener('click', ()=>{
-  pwOverlay.classList.remove('open');
-  pendingAction = null;
-});
-pwOverlay.addEventListener('click', (e)=>{ if(e.target===pwOverlay){ pwOverlay.classList.remove('open'); pendingAction=null; } });
-pwForm.addEventListener('submit', (e)=>{
-  e.preventDefault();
-  const val = document.getElementById('pwInput').value;
-  pwOverlay.classList.remove('open');
-  if(val === ADMIN_PASSWORD){
-    isAdmin = true;
-    const action = pendingAction;
-    pendingAction = null;
-    render(); // re-render so edit/delete buttons appear
-    if(action) action();
-  } else {
-    alert('Nepareiza parole.');
-    pendingAction = null;
-  }
-});
-
-// --- Suggestion form (sends via email, never touches stored data) ---
-const suggestOverlay = document.getElementById('suggestOverlay');
-document.getElementById('openSuggest').addEventListener('click', ()=>{
-  document.getElementById('suggestForm').reset();
-  suggestOverlay.classList.add('open');
-  document.getElementById('sParty').focus();
-});
-document.getElementById('cancelSuggest').addEventListener('click', ()=>suggestOverlay.classList.remove('open'));
-suggestOverlay.addEventListener('click', (e)=>{ if(e.target===suggestOverlay) suggestOverlay.classList.remove('open'); });
-
-document.getElementById('suggestForm').addEventListener('submit', (e)=>{
-  e.preventDefault();
-  const party = document.getElementById('sParty').value.trim();
-  const type = document.getElementById('sType').value;
-  const date = document.getElementById('sDate').value;
-  const time = document.getElementById('sTime').value;
-  const place = document.getElementById('sPlace').value.trim();
-  const note = document.getElementById('sNote').value.trim();
-  const from = document.getElementById('sFrom').value.trim();
-
-  const subject = `Ierosinājums: ${party} – ${place}`;
-  const bodyLines = [
-    `Partija: ${party}`,
-    `Veids: ${type}`,
-    `Datums: ${date || '(nav norādīts)'}`,
-    `Laiks: ${time || '(nav norādīts)'}`,
-    `Vieta: ${place}`,
-    `Piezīme: ${note || '-'}`,
-    `No: ${from || '(nav norādīts)'}`,
-  ];
-  const body = bodyLines.join('\n');
-  const mailto = `mailto:${OWNER_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  window.location.href = mailto;
-  suggestOverlay.classList.remove('open');
-});
-
-form.addEventListener('submit', async (e)=>{
-  e.preventDefault();
-  const id = document.getElementById('entryId').value;
-  const data = {
-    party: document.getElementById('fParty').value.trim(),
-    type: document.getElementById('fType').value,
-    date: document.getElementById('fDate').value,
-    time: document.getElementById('fTime').value,
-    place: document.getElementById('fPlace').value.trim(),
-    note: document.getElementById('fNote').value.trim(),
-  };
-  if(!data.party || !data.date || !data.place){ return; }
-
-  const saveBtn = document.getElementById('saveBtn');
-  saveBtn.textContent = 'Saglabā...'; saveBtn.disabled = true;
-
-  if(id){
-    const idx = entries.findIndex(x=>x.id===id);
-    if(idx>-1) entries[idx] = {...entries[idx], ...data};
-  } else {
-    entries.push({id: uid(), ...data});
-  }
-  await saveEntries();
-  saveBtn.textContent = 'Saglabāt'; saveBtn.disabled = false;
-  closeModal();
-  render();
-});
-
-document.getElementById('entries').addEventListener('click', async (e)=>{
-  const btn = e.target.closest('button[data-action]');
-  if(!btn) return;
-  const id = btn.dataset.id;
-  const entry = entries.find(x=>x.id===id);
-  if(btn.dataset.action === 'edit'){
-    openModal(entry);
-  } else if(btn.dataset.action === 'delete'){
-    if(confirm(`Dzēst ierakstu — ${entry.party} (${entry.place})?`)){
-      entries = entries.filter(x=>x.id!==id);
-      await saveEntries();
-      render();
-    }
-  }
-});
-
-loadEntries();
+render();
 </script>
 
 </body>
