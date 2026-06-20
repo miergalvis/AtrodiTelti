@@ -3,22 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Partiju Karte — kur un kad</title>
+<title>Partiju teltis vienuviet</title>
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
   :root{
     --cream:#F1F0ED;
     --ink:#5d5d5d;
-    --carmine:#000000;
+    --carmine:#1a1a1a;
     --carmine-dark:#5d5d5d;
-    --line:#000000;
+    --line:#5d5d5d;
     --paper:#FFFFFF;
   }
-  *{box-sizing:border-box;}
+  *{box-sizing:border-box; font-family:'Poppins', sans-serif;}
   body{
     margin:0;
     background:var(--cream);
     color:var(--ink);
-    font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+    font-family:'Poppins', sans-serif;
     -webkit-font-smoothing:antialiased;
   }
   header{
@@ -26,11 +27,12 @@
     color:#FFFFFF;
     padding:36px 24px 28px;
     position:relative;
+    text-align:center;
     overflow:hidden;
   }
   .header-inner{max-width:980px;margin:0 auto;position:relative;}
   .eyebrow{
-    font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+    font-family:'Poppins', sans-serif;
     letter-spacing:.18em;
     text-transform:uppercase;
     font-size:11px;
@@ -46,7 +48,7 @@
     color:#FFFFFF;
   }
   .sub{
-    margin:10px 0 0;
+    margin:10px auto 0;
     font-size:15px;
     max-width:560px;
     opacity:.92;
@@ -71,15 +73,15 @@
     font-size:10px;
     text-transform:uppercase;
     letter-spacing:.1em;
-    color:#7d7264;
-    font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+    color:#5d5d5d;
+    font-family:'Poppins', sans-serif;
   }
   select, input[type=text]{
-    font-family:inherit;
+    font-family:'Poppins', sans-serif;
     font-size:14px;
     padding:8px 10px;
     border:1px solid var(--line);
-    border-radius:3px;
+    border-radius:15px;
     background:var(--paper);
     color:var(--ink);
     min-width:150px;
@@ -87,10 +89,10 @@
   select:focus, input:focus{outline:2px solid var(--carmine); outline-offset:1px;}
 
   button{
-    font-family:inherit;
+    font-family:'Poppins', sans-serif;
     cursor:pointer;
     border:none;
-    border-radius:3px;
+    border-radius:10px;
   }
   .btn-primary{
     background:var(--carmine);
@@ -111,9 +113,9 @@
   }
 
   .count-line{
-    font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+    font-family:'Poppins', sans-serif;
     font-size:12px;
-    color:#7d7264;
+    color:#5d5d5d;
     margin-bottom:18px;
     letter-spacing:.02em;
   }
@@ -121,7 +123,7 @@
   .entries{display:flex; flex-direction:column; gap:0;}
 
   .day-divider{
-    font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+    font-family:'Poppins', sans-serif;
     font-size:22px;
     font-weight:700;
     letter-spacing:.04em;
@@ -136,7 +138,7 @@
   .card{
     background:var(--paper);
     border:1px solid var(--line);
-    border-radius:4px;
+    border-radius:15px;
     padding:16px 18px;
     margin-bottom:10px;
     display:grid;
@@ -146,7 +148,7 @@
   }
 
   .card-time{
-    font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+    font-family:'Poppins', sans-serif;
     font-size:18px;
     font-weight:700;
     color:var(--ink);
@@ -162,7 +164,7 @@
   }
   .card-main .type-tag{
     display:inline-block;
-    font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+    font-family:'Poppins', sans-serif;
     font-size:10px;
     letter-spacing:.1em;
     text-transform:uppercase;
@@ -181,34 +183,28 @@
   .empty{
     text-align:center;
     padding:60px 20px;
-    color:#7d7264;
+    color:#5d5d5d;
   }
   .empty .big{font-size:32px; display:block; margin-bottom:8px;}
 
-  .music-toggle{
-  margin-top:18px;
-  display:inline-flex;
-  align-items:center;
-  background:rgba(255,255,255,.14);
-  padding:8px 12px;
-  border-radius:4px;
-}
 
-.music-toggle label{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  font-size:13px;
-  cursor:pointer;
-  user-select:none;
-}
 
-.music-toggle input{
-  width:15px;
-  height:15px;
-  cursor:pointer;
-  accent-color:#FFFFFF;
-}
+  .site-footer{
+    max-width:980px;
+    margin:0 auto;
+    padding:24px 24px 36px;
+    border-top:1px solid var(--line);
+    color:#5d5d5d;
+    font-size:13px;
+    line-height:1.5;
+    text-align:center;
+  }
+  .site-footer a{
+    color:var(--ink);
+    font-weight:700;
+    text-decoration:underline;
+  }
+
   @media (max-width:540px){
     .card{grid-template-columns:1fr; gap:8px;}
     .card-time{flex-direction:row; gap:8px;}
@@ -219,24 +215,10 @@
 
 <header>
   <div class="header-inner">
-    <h1>Atrodi telti</h1>
-    <p class="sub">Parunā ar senioriem!</p>
-    <div class="music-toggle">
-  <label>
-    <input type="checkbox" id="musicToggle">
-    <span>MILŽU CĪŅA!!!</span>
-  </label>
-</div>
-
-<audio id="bgMusic" loop preload="auto">
-  <source src="music.mp3" type="audio/mpeg">
-</audio>
+    <h1>Partiju teltis vienuviet</h1>
+    <p class="sub">Atrodi, kur un cikos 15. Saeimas vēlēšanās kandidējošās partijas būs sastopamas klātienē, un izmanto iespēju satikt kandidātus pirms vēlēšanām.</p>
   </div>
 </header>
-
-<audio id="bgMusic" loop preload="auto">
-  <source src="music.mp3" type="audio/mpeg">
-</audio>
 
 <main>
 
@@ -255,6 +237,10 @@
 
 </main>
 
+<footer class="site-footer">
+  Par labojumiem, teltīm un citu, sazinaties ar Visvaldi:
+  <a href="mailto:visvaldis.berzins@klubsmaja.lv">visvaldis.berzins@klubsmaja.lv</a>
+</footer>
 
 <script>
 
@@ -262,23 +248,20 @@ const ENTRIES = [
   { party: 'Latvija Pirmajā Vietā', type: 'tent', date: '2026-06-21', time: '14:30', place: 'Doma laukums, Rīga', note: '' },
   { party: 'Jaunā Vienotība', type: 'tent', date: '2026-06-21', time: '15:30', place: 'Doma laukums, Rīga', note: '' },
   { party: 'Zaļo un Zemnieku savienība', type: 'tent', date: '2026-07-21', time: '15:30', place: 'Doma laukums, Rīga', note: '' },
-  { party: 'Jaunā Vienotība', type: 'tent', date: '2026-06-21', time: '15:30', place: 'Doma laukums, Rīga', note: '' },
-  { party: 'Austošā saule Latvijai', type: 'tent', date: '2026-06-21', time: '16:30', place: 'Doma laukums, Rīga', note: '' },
-
 ];
 
 const PARTY_LIST = [
-  { name: 'Latvija Pirmajā Vietā', color: '#7A1F2B' },
-  { name: 'Jaunā Vienotība', color: '#64c049' },
-  { name: 'Nacionālā apvienība', color: '#2F4A22' },
   { name: 'Apvienotais saraksts', color: '#4C8C2B' },
-  { name: 'Zaļo un Zemnieku savienība', color: '#1B5E20' },
+  { name: 'Austošā saule Latvijai', color: '#D4A800' },
   { name: 'Jaunā konservatīvā partija', color: '#14807A' },
-  { name: 'Progresīvie', color: '#E6007E' },
-  { name: 'Stabilitātei!', color: '#C0392B' },
+  { name: 'Jaunā Vienotība', color: '#64c049' },
+  { name: 'Latvija Pirmajā Vietā', color: '#7A1F2B' },
   { name: 'Latvijas attīstībai', color: '#E07B00' },
   { name: 'Mēs mainām noteikumus', color: '#6A3FA0' },
-  { name: 'Austošā saule Latvijai', color: '#D4A800' },
+  { name: 'Nacionālā apvienība', color: '#2F4A22' },
+  { name: 'Progresīvie', color: '#E6007E' },
+  { name: 'Stabilitātei!', color: '#C0392B' },
+  { name: 'Zaļo un Zemnieku savienība', color: '#1B5E20' },
 ];
 const PARTY_COLOR = Object.fromEntries(PARTY_LIST.map(p=>[p.name, p.color]));
 const PARTY_ORDER = Object.fromEntries(PARTY_LIST.map((p,i)=>[p.name, i]));
@@ -355,29 +338,7 @@ function render(){
 
 document.getElementById('filterParty').addEventListener('change', render);
 
-
 render();
-
-const musicToggle = document.getElementById('musicToggle');
-const bgMusic = document.getElementById('bgMusic');
-
-if (musicToggle && bgMusic) {
-  bgMusic.volume = 0.35;
-
-  musicToggle.addEventListener('change', async () => {
-    if (musicToggle.checked) {
-      try {
-        await bgMusic.play();
-      } catch (error) {
-        musicToggle.checked = false;
-        alert('Pārlūks neļāva automātiski palaist mūziku. Pamēģini vēlreiz.');
-      }
-    } else {
-      bgMusic.pause();
-    }
-  });
-}
-
 </script>
 
 </body>
