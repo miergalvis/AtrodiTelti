@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Partiju teltis vienuviet</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap');
   :root{
     --cream:#F1F0ED;
     --ink:#5d5d5d;
@@ -14,12 +14,12 @@
     --line:#5d5d5d;
     --paper:#FFFFFF;
   }
-  *{box-sizing:border-box; font-family:'Poppins', sans-serif;}
+  *{box-sizing:border-box; font-family:'Ubuntu', sans-serif;}
   body{
     margin:0;
     background:var(--cream);
     color:var(--ink);
-    font-family:'Poppins', sans-serif;
+    font-family:'Ubuntu', sans-serif;
     -webkit-font-smoothing:antialiased;
   }
   header{
@@ -32,7 +32,7 @@
   }
   .header-inner{max-width:980px;margin:0 auto;position:relative;}
   .eyebrow{
-    font-family:'Poppins', sans-serif;
+    font-family:'Ubuntu', sans-serif;
     letter-spacing:.18em;
     text-transform:uppercase;
     font-size:11px;
@@ -74,10 +74,10 @@
     text-transform:uppercase;
     letter-spacing:.1em;
     color:#5d5d5d;
-    font-family:'Poppins', sans-serif;
+    font-family:'Ubuntu', sans-serif;
   }
   select, input[type=text]{
-    font-family:'Poppins', sans-serif;
+    font-family:'Ubuntu', sans-serif;
     font-size:14px;
     padding:8px 10px;
     border:1px solid var(--line);
@@ -89,7 +89,7 @@
   select:focus, input:focus{outline:2px solid var(--carmine); outline-offset:1px;}
 
   button{
-    font-family:'Poppins', sans-serif;
+    font-family:'Ubuntu', sans-serif;
     cursor:pointer;
     border:none;
     border-radius:10px;
@@ -113,7 +113,7 @@
   }
 
   .count-line{
-    font-family:'Poppins', sans-serif;
+    font-family:'Ubuntu', sans-serif;
     font-size:12px;
     color:#5d5d5d;
     margin-bottom:18px;
@@ -123,7 +123,7 @@
   .entries{display:flex; flex-direction:column; gap:0;}
 
   .day-divider{
-    font-family:'Poppins', sans-serif;
+    font-family:'Ubuntu', sans-serif;
     font-size:22px;
     font-weight:700;
     letter-spacing:.04em;
@@ -148,7 +148,7 @@
   }
 
   .card-time{
-    font-family:'Poppins', sans-serif;
+    font-family:'Ubuntu', sans-serif;
     font-size:18px;
     font-weight:700;
     color:var(--ink);
@@ -162,9 +162,9 @@
     font-weight:700;
     margin:0 0 2px;
   }
-  .card-main .type-tag{
+  .card-main .region-tag{
     display:inline-block;
-    font-family:'Poppins', sans-serif;
+    font-family:'Ubuntu', sans-serif;
     font-size:10px;
     letter-spacing:.1em;
     text-transform:uppercase;
@@ -174,8 +174,6 @@
     padding:0;
     margin:4px 0 8px;
   }
-  .type-meeting .type-tag{color:var(--ink); border-color:var(--ink);}
-  .type-other .type-tag{color:var(--ink); border-color:var(--ink);}
 
   .card-main .place{font-size:14px; margin:0 0 4px;}
   .card-main .note{font-size:13px; color:#5b5347; margin:6px 0 0; line-height:1.45;}
@@ -228,6 +226,10 @@
         <label for="filterParty">Partija</label>
         <select id="filterParty"><option value="">Visas</option></select>
       </div>
+      <div class="filter-group">
+        <label for="filterRegion">Reģions</label>
+        <select id="filterRegion"><option value="">Visi</option></select>
+      </div>
     </div>
   </div>
 
@@ -245,21 +247,21 @@
 <script>
 
 const ENTRIES = [
-  { party: 'Apvienotais saraksts', type: 'tent', date: '2026-10-03', time: '12:00', place: 'Kaut kur Latvijā', note: '' },
-  { party: 'Austošā saule Latvijai', type: 'tent', date: '2026-10-03', time: '12:00', place: 'Kaut kur Latvijā', note: '' },
-  { party: 'Gobzema Saraksts', type: 'tent', date: '2026-10-03', time: '12:00', place: 'Kaut kur Latvijā', note: '' },
-  { party: 'Jaunā konservatīvā partija', type: 'tent', date: '2026-10-03', time: '12:00', place: 'Kaut kur Latvijā', note: '' },
-  { party: 'Jaunā Vienotība', type: 'tent', date: '2026-10-03', time: '12:00', place: 'Kaut kur Latvijā', note: '' },
-  { party: 'Kustība "Par!"', type: 'tent', date: '2026-10-03', time: '12:00', place: 'Kaut kur Latvijā', note: '' },
-  { party: 'Latvija Pirmajā Vietā', type: 'tent', date: '2026-10-03', time: '12:00', place: 'Kaut kur Latvijā', note: '' },
-  { party: 'Latvijas attīstībai', type: 'tent', date: '2026-10-03', time: '12:00', place: 'Kaut kur Latvijā', note: '' },
-  { party: 'Mēs mainām noteikumus', type: 'tent', date: '2026-10-03', time: '12:00', place: 'Kaut kur Latvijā', note: '' },
-  { party: 'Nacionālā apvienība', type: 'tent', date: '2026-10-03', time: '12:00', place: 'Kaut kur Latvijā', note: '' },
-  { party: 'Progresīvie', type: 'tent', date: '2026-10-03', time: '12:00', place: 'Kaut kur Latvijā', note: '' },
-  { party: 'Saskaņas Centrs', type: 'tent', date: '2026-10-03', time: '12:00', place: 'Kaut kur Latvijā', note: '' },
-  { party: 'Suverēnā vara', type: 'tent', date: '2026-10-03', time: '12:00', place: 'Kaut kur Latvijā', note: '' },
-  { party: 'Stabilitātei!', type: 'tent', date: '2026-10-03', time: '12:00', place: 'Kaut kur Latvijā', note: '' },
-  { party: 'Zaļo un Zemnieku savienība', type: 'tent', date: '2026-10-03', time: '12:00', place: 'Kaut kur Latvijā', note: '' },  
+  { party: 'Apvienotais saraksts', region: 'Rīga', date: '2026-10-03', time: '12:00', place: 'Kaut kur Latvijā', note: '' },
+  { party: 'Austošā saule Latvijai', region: 'Vidzeme', date: '2026-10-03', time: '12:00', place: 'Kaut kur Latvijā', note: '' },
+  { party: 'Gobzema Saraksts', region: 'Latgale', date: '2026-10-03', time: '12:00', place: 'Kaut kur Latvijā', note: '' },
+  { party: 'Jaunā konservatīvā partija', region: 'Zemgale', date: '2026-10-03', time: '12:00', place: 'Kaut kur Latvijā', note: '' },
+  { party: 'Jaunā Vienotība', region: 'Kurzeme', date: '2026-10-03', time: '12:00', place: 'Kaut kur Latvijā', note: '' },
+  { party: 'Kustība "Par!"', region: 'Rīga', date: '2026-10-03', time: '12:00', place: 'Kaut kur Latvijā', note: '' },
+  { party: 'Latvija Pirmajā Vietā', region: 'Vidzeme', date: '2026-10-03', time: '12:00', place: 'Kaut kur Latvijā', note: '' },
+  { party: 'Latvijas attīstībai', region: 'Latgale', date: '2026-10-03', time: '12:00', place: 'Kaut kur Latvijā', note: '' },
+  { party: 'Mēs mainām noteikumus', region: 'Zemgale', date: '2026-10-03', time: '12:00', place: 'Kaut kur Latvijā', note: '' },
+  { party: 'Nacionālā apvienība', region: 'Kurzeme', date: '2026-10-03', time: '12:00', place: 'Kaut kur Latvijā', note: '' },
+  { party: 'Progresīvie', region: 'Rīga', date: '2026-10-03', time: '12:00', place: 'Kaut kur Latvijā', note: '' },
+  { party: 'Saskaņas Centrs', region: 'Vidzeme', date: '2026-10-03', time: '12:00', place: 'Kaut kur Latvijā', note: '' },
+  { party: 'Suverēnā vara', region: 'Latgale', date: '2026-10-03', time: '12:00', place: 'Kaut kur Latvijā', note: '' },
+  { party: 'Stabilitātei!', region: 'Zemgale', date: '2026-10-03', time: '12:00', place: 'Kaut kur Latvijā', note: '' },
+  { party: 'Zaļo un Zemnieku savienība', region: 'Kurzeme', date: '2026-10-03', time: '12:00', place: 'Kaut kur Latvijā', note: '' },
 ];
 
 const PARTY_LIST = [
@@ -282,13 +284,20 @@ const PARTY_LIST = [
 const PARTY_COLOR = Object.fromEntries(PARTY_LIST.map(p=>[p.name, p.color]));
 const PARTY_ORDER = Object.fromEntries(PARTY_LIST.map((p,i)=>[p.name, i]));
 const DEFAULT_PARTY_COLOR = '#9D2235';
-const typeLabels = {tent:'Telts', meeting:'Tikšanās', other:'Cits'};
+const REGION_LIST = ['Rīga', 'Vidzeme', 'Latgale', 'Zemgale', 'Kurzeme'];
 
 function populateFilters(){
   const partySel = document.getElementById('filterParty');
+  const regionSel = document.getElementById('filterRegion');
+
   const curParty = partySel.value;
+  const curRegion = regionSel.value;
+
   partySel.innerHTML = '<option value="">Visas</option>' + PARTY_LIST.map(p=>`<option value="${escAttr(p.name)}">${esc(p.name)}</option>`).join('');
+  regionSel.innerHTML = '<option value="">Visi</option>' + REGION_LIST.map(r=>`<option value="${escAttr(r)}">${esc(r)}</option>`).join('');
+
   partySel.value = curParty;
+  regionSel.value = curRegion;
 }
 
 function formatDateLabel(dstr){
@@ -304,9 +313,11 @@ function render(){
   populateFilters();
 
   const partyF = document.getElementById('filterParty').value;
+  const regionF = document.getElementById('filterRegion').value;
 
   let filtered = ENTRIES.filter(e=>{
     if(partyF && e.party !== partyF) return false;
+    if(regionF && e.region !== regionF) return false;
     return true;
   });
 
@@ -339,11 +350,11 @@ function render(){
     }
     const timeDisplay = e.time ? e.time : '—';
     html += `
-      <div class="card type-${e.type}">
+      <div class="card">
         <div class="card-time">${timeDisplay}<small>${e.time?'':'laiks nezināms'}</small></div>
         <div class="card-main">
           <p class="party" style="color:${PARTY_COLOR[e.party]||DEFAULT_PARTY_COLOR}">${esc(e.party)}</p>
-          <span class="type-tag">${typeLabels[e.type]||'Cits'}</span>
+          <span class="region-tag">${esc(e.region || 'Reģions nav norādīts')}</span>
           <p class="place">${esc(e.place)}</p>
           ${e.note ? `<p class="note">${esc(e.note)}</p>` : ''}
         </div>
@@ -353,6 +364,7 @@ function render(){
 }
 
 document.getElementById('filterParty').addEventListener('change', render);
+document.getElementById('filterRegion').addEventListener('change', render);
 
 render();
 </script>
